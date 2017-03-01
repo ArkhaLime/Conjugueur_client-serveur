@@ -101,7 +101,7 @@ public class ThreadClient implements Runnable {
 							type = EMsgType.ERREUR;
 						}
 					}else{
-						log.print(nomClasse, ELog.ERROR, "Le temps '"+msgIn.getStrTemps()+"' n'a pas été trouvé");
+						log.print(nomClasse, ELog.ERROR, "Le verbe '"+msgIn.getMessage()+"' n'est pas reconnu!");
 						//le verbe donné ne correspond à rien
 						msg =  "Le verbe '"+msgIn.getMessage()+"' n'est pas reconnu!\n"+msg;
 						type=EMsgType.ERREUR;
