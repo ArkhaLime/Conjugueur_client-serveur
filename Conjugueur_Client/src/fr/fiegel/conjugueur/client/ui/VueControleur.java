@@ -1,6 +1,5 @@
 package fr.fiegel.conjugueur.client.ui;
 
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -52,7 +51,7 @@ public class VueControleur implements ActionListener,WindowListener,KeyListener 
 			int port = vue.getPortServeur();
 			try {
 				emission = new Socket(adrServeur, port);
-				vue.ecrireSucces("La connexion au serveur a réussie\n\n");
+				vue.ecrireSucces("La connexion au serveur a réussie\n");
 				out = new ObjectOutputStream(emission.getOutputStream());
 				in = new ObjectInputStream( emission.getInputStream());
 				vue.enablePartieConjuguaison(true);
@@ -60,7 +59,7 @@ public class VueControleur implements ActionListener,WindowListener,KeyListener 
 			} catch (UnknownHostException e) {
 				exceptionConnexionServeur("Le serveur à l'adresse '"+adrServeur+":"+port+"' est introuvable!\n",e);
 			}catch(ConnectException e){
-				exceptionConnexionServeur("La connexion a été refusée!",e);
+				exceptionConnexionServeur("La connexion a été refusée!\n",e);
 			} catch (IOException e) {
 				exceptionConnexionServeur(e.getLocalizedMessage(),e);
 			}
@@ -232,7 +231,6 @@ public class VueControleur implements ActionListener,WindowListener,KeyListener 
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		String nomComp = e.getComponent().getName();
 		int touche = e.getExtendedKeyCode();
 		if(touche==KeyEvent.VK_ENTER){
@@ -240,11 +238,11 @@ public class VueControleur implements ActionListener,WindowListener,KeyListener 
 				vue.focusTxtPortServeur();
 				e.consume();
 			}
-			if(nomComp.equalsIgnoreCase("txtPortServeur")){
+			if(nomComp.equalsIgnoreCase("txtPortServeur") || nomComp.equalsIgnoreCase("btnConnexion")){
 				vue.cliqueBtnConnexion();
 				e.consume();
 			}
-			if(nomComp.equalsIgnoreCase("txtInfinitif") || nomComp.equalsIgnoreCase("cboTemps")){
+			if(nomComp.equalsIgnoreCase("txtInfinitif") || nomComp.equalsIgnoreCase("cboTemps") || nomComp.equalsIgnoreCase("btnValider")){
 				vue.cliqueBtnValider();
 				e.consume();
 			}

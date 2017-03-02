@@ -230,8 +230,11 @@ public class VueConjugueur extends JFrame {
 		pnlConnexion.add(txtPortServeur);
 		
 		btnConnexion = new JButton("Connexion");
+		btnConnexion.setName("btnConnexion");
+		btnConnexion.setPreferredSize(new Dimension(100, 26));
 		btnConnexion.addActionListener(ctrl);
 		btnConnexion.setActionCommand("connexion");
+		btnConnexion.addKeyListener(ctrl);
 		pnlConnexion.add(btnConnexion);
 		
 		pnlEtatServeur = new JPanel();
@@ -264,21 +267,24 @@ public class VueConjugueur extends JFrame {
 		
 		JLabel lblTemps = new JLabel("Temps");
 		lblTemps.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblTemps.setPreferredSize(new Dimension(60, 14));
+		lblTemps.setPreferredSize(new Dimension(71, 14));
 		panelVerbe.add(lblTemps);
 		
 		cboTemps = new JComboBox<Object>();
 		lblTemps.setLabelFor(cboTemps);
 		cboTemps.setModel(new DefaultComboBoxModel<Object>(ETemps.getArrayTemps()));
 		cboTemps.setMinimumSize(new Dimension(80, 20));
-		cboTemps.setPreferredSize(new Dimension(80, 20));
+		cboTemps.setPreferredSize(new Dimension(150, 20));
 		cboTemps.setName("cboTemps");
 		cboTemps.addKeyListener(ctrl);
 		panelVerbe.add(cboTemps);
 		
 		btnValider = new JButton("Valider");
+		btnValider.setName("btnValider");
+		btnValider.setPreferredSize(new Dimension(80, 26));
 		btnValider.addActionListener(ctrl);
 		btnValider.setActionCommand("valider");
+		btnValider.addKeyListener(ctrl);
 		panelVerbe.add(btnValider);
 		panelVerbe.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtInfinitif, cboTemps, btnValider}));
 		
