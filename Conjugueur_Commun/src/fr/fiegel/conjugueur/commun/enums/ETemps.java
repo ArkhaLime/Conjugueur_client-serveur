@@ -9,7 +9,9 @@ public enum ETemps {
 	FUTUR("Futur"),
 	PASSE_COMPOSE("Passé composé"),
 	PARTICIPE_PRESENT("Participe présent"),
-	PARTICIPE_PASSE("Participe passé");
+	PARTICIPE_PASSE("Participe passé"),
+	CONDITIONNEL_PRESENT("Conditionnel présent"),
+	CONDITIONNEL_PASSE("Conditionnel passé");
 	
 	private String intitule;
 	
