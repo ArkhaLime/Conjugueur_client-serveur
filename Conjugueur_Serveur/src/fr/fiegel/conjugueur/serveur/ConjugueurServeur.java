@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import fr.fiegel.conjugueur.commun.Constantes;
 import fr.fiegel.conjugueur.commun.enums.ELog;
+import fr.fiegel.conjugueur.commun.enums.ETemps;
 import fr.fiegel.conjugueur.commun.logger.Logger;
 
 public class ConjugueurServeur {
@@ -24,6 +25,9 @@ public class ConjugueurServeur {
 			serveur = new ServerSocket(port);
 			log.print(ELog.INFO, "Le serveur reçoit sur le port "+serveur.getLocalPort());
 			log.print(ELog.INFO, "> Serveur prêt");
+			log.print(ELog.INFO, "Version Conjugueur_Commun: " + Constantes.LIB_VERSION);
+			log.print(ELog.INFO, "Temps disponibles:");
+			afficherTemps();
 			
 			while (true) {
 				try {
@@ -45,6 +49,14 @@ public class ConjugueurServeur {
 //			System.out.println("Il manque le port du serveur");
 //		}
 
+	}
+	
+	private static void afficherTemps(){
+		Object[] temps = ETemps.getArrayTemps();
+		for(int i=0;i<temps.length;i++){
+			System.out.println(temps[i]);
+		}
+		System.out.print("\n");
 	}
 
 }
