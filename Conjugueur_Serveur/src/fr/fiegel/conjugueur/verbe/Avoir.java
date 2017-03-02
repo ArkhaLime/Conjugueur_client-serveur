@@ -76,8 +76,33 @@ public class Avoir extends AVerbe {
 	}
 
 	@Override
-	public String termPasseComposePS() {
+	public String termPassePS() {
 		return "eu";
+	}
+
+	@Override
+	public String termCondPresent1PS() {
+		return "aurais";
+	}
+
+	@Override
+	public String termCondPresent3PS() {
+		return "aurait";
+	}
+
+	@Override
+	public String termCondPresent1PP() {
+		return "aurions";
+	}
+
+	@Override
+	public String termCondPresent2PP() {
+		return "auriez";
+	}
+
+	@Override
+	public String termCondPresent3PP() {
+		return "auraient";
 	}
 
 }
