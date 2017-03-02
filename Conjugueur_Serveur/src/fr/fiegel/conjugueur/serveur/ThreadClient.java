@@ -13,6 +13,8 @@ import fr.fiegel.conjugueur.commun.messages.MessageClient;
 import fr.fiegel.conjugueur.commun.messages.MessageServeur;
 import fr.fiegel.conjugueur.commun.messages.MsgUtils;
 import fr.fiegel.conjugueur.parser.temps.ATempsParser;
+import fr.fiegel.conjugueur.parser.temps.TempsParserConditionnelPasse;
+import fr.fiegel.conjugueur.parser.temps.TempsParserConditionnelPresent;
 import fr.fiegel.conjugueur.parser.temps.TempsParserFutur;
 import fr.fiegel.conjugueur.parser.temps.TempsParserParticipePasse;
 import fr.fiegel.conjugueur.parser.temps.TempsParserParticipePresent;
@@ -148,7 +150,9 @@ public class ThreadClient implements Runnable {
 	}
 	
 	public ATempsParser createTempsParser(){
-		ATempsParser parser = new TempsParserParticipePasse(null);
+		ATempsParser parser = new TempsParserConditionnelPasse(null);
+		parser = new TempsParserConditionnelPresent(parser);
+		parser = new TempsParserParticipePasse(parser);
 		parser = new TempsParserParticipePresent(parser);
 		parser = new TempsParserPasseCompose(parser);
 		parser = new TempsParserFutur(parser);
