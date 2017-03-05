@@ -86,27 +86,77 @@ public abstract class AVerbe {
 		
 	//passé composé
 	public String conjuguePasseCompose1PS(){
-		return getPremierePers(auxiliaire.termPresent1PS())+" "+radical+termPasseComposePS();
+		return getPremierePers(auxiliaire.termPresent1PS())+" "+radical+termPassePS();
 	}
 	
 	public String conjuguePasseCompose2PS(){
-		return "Tu "+auxiliaire.termPresent2PS()+" "+radical+termPasseComposePS();
+		return "Tu "+auxiliaire.termPresent2PS()+" "+radical+termPassePS();
 	}
 	
 	public String conjuguePasseCompose3PS(){
-		return "Il "+auxiliaire.termPresent3PS()+" "+radical+termPasseComposePS();
+		return "Il "+auxiliaire.termPresent3PS()+" "+radical+termPassePS();
 	}
 	
 	public String conjuguePasseCompose1PP(){
-		return "Nous "+auxiliaire.termPresent1PP()+" "+radical+termPasseComposePP();
+		return "Nous "+auxiliaire.termPresent1PP()+" "+radical+termPassePP();
 	}
 	
 	public String conjuguePasseCompose2PP(){
-		return "Vous "+auxiliaire.termPresent2PP()+" "+radical+termPasseComposePP();
+		return "Vous "+auxiliaire.termPresent2PP()+" "+radical+termPassePP();
 	}
 	
 	public String conjuguePasseCompose3PP(){
-		return "Ils "+auxiliaire.termPresent3PP()+" "+radical+termPasseComposePP();
+		return "Ils "+auxiliaire.termPresent3PP()+" "+radical+termPassePP();
+	}
+	
+	//conditionnel présent
+	public String conjugueCondPresent1PS(){
+		return getPremierePers(radical+termCondPresent1PS());
+	}
+	
+	public String conjugueCondPresent2PS(){
+		return "Tu "+radical+termCondPresent2PS();
+	}
+	
+	public String conjugueCondPresent3PS(){
+		return "Il "+radical+termCondPresent3PS();
+	}
+	
+	public String conjugueCondPresent1PP(){
+		return "Nous "+radical+termCondPresent1PP();
+	}
+	
+	public String conjugueCondPresent2PP(){
+		return "Vous "+radical+termCondPresent2PP();
+	}
+	
+	public String conjugueCondPresent3PP(){
+		return "Ils "+radical+termCondPresent3PP();
+	}
+	
+	//conditionnel passé
+	public String conjugueCondPasse1PS(){
+		return getPremierePers(auxiliaire.termCondPresent1PS())+" "+radical+termPassePS();
+	}
+	
+	public String conjugueCondPasse2PS(){
+		return "Tu "+auxiliaire.termCondPresent2PS()+" "+radical+termPassePS();
+	}
+	
+	public String conjugueCondPasse3PS(){
+		return "Il "+auxiliaire.termCondPresent3PS()+" "+radical+termPassePS();
+	}
+	
+	public String conjugueCondPasse1PP(){
+		return "Nous "+auxiliaire.termCondPresent1PP()+" "+radical+termPassePP();
+	}
+	
+	public String conjugueCondPasse2PP(){
+		return "Vous "+auxiliaire.termCondPresent2PP()+" "+radical+termPassePP();
+	}
+	
+	public String conjugueCondPasse3PP(){
+		return "Ils "+auxiliaire.termCondPresent3PP()+" "+radical+termPassePP();
 	}
 	
 	public String conjuguePresent(){
@@ -142,12 +192,34 @@ public abstract class AVerbe {
 		return res;
 	}
 	
+	public String conjugueCondPresent(){
+		String res="";
+		res+=conjugueCondPresent1PS()+"\n";
+		res+=conjugueCondPresent2PS()+"\n";
+		res+=conjugueCondPresent3PS()+"\n";
+		res+=conjugueCondPresent1PP()+"\n";
+		res+=conjugueCondPresent2PP()+"\n";
+		res+=conjugueCondPresent3PP()+"\n";
+		return res;
+	}
+	
+	public String conjugueCondPasse(){
+		String res="";
+		res+=conjugueCondPasse1PS()+"\n";
+		res+=conjugueCondPasse2PS()+"\n";
+		res+=conjugueCondPasse3PS()+"\n";
+		res+=conjugueCondPasse1PP()+"\n";
+		res+=conjugueCondPasse2PP()+"\n";
+		res+=conjugueCondPasse3PP()+"\n";
+		return res;
+	}
+	
 	public String conjugueParticipePresent(){
 		return "En "+radical+termPresent1PP().replace("ons", "ant")+"\n";
 	}
 	
 	public  String conjugueParticipePasse(){
-		return radical+termPasseComposePS()+"\n";
+		return radical+termPassePS()+"\n";
 	}
 	
 	//infinitif
@@ -170,9 +242,19 @@ public abstract class AVerbe {
 	public abstract String termFutur3PP();
 	
 	//passé composé
-	public abstract String termPasseComposePS();
-	public String termPasseComposePP(){
-		return termPasseComposePS();
+	public abstract String termPassePS();
+	public String termPassePP(){
+		return termPassePS();
 	}
+	
+	//conditionnel présent
+	public abstract String termCondPresent1PS();
+	public String termCondPresent2PS(){
+		return termCondPresent1PS();
+	}
+	public abstract String termCondPresent3PS();
+	public abstract String termCondPresent1PP();
+	public abstract String termCondPresent2PP();
+	public abstract String termCondPresent3PP();
 	
 }

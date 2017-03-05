@@ -13,6 +13,8 @@ import fr.fiegel.conjugueur.commun.messages.MessageClient;
 import fr.fiegel.conjugueur.commun.messages.MessageServeur;
 import fr.fiegel.conjugueur.commun.messages.MsgUtils;
 import fr.fiegel.conjugueur.parser.temps.ATempsParser;
+import fr.fiegel.conjugueur.parser.temps.TempsParserConditionnelPasse;
+import fr.fiegel.conjugueur.parser.temps.TempsParserConditionnelPresent;
 import fr.fiegel.conjugueur.parser.temps.TempsParserFutur;
 import fr.fiegel.conjugueur.parser.temps.TempsParserParticipePasse;
 import fr.fiegel.conjugueur.parser.temps.TempsParserParticipePresent;
@@ -75,7 +77,7 @@ public class ThreadClient implements Runnable {
 				msgOut=null;
 				log.print(nomClasse, ELog.DEBUG	, "Attente d'un message");
 				msgIn = (MessageClient)in.readObject();
-				log.print(nomClasse, ELog.DEBUG, msgIn.toString());
+				log.print(nomClasse, ELog.INFO, msgIn.toString());
 				
 				//vérification si ce n'est pas un message pour fermer la connexion
 				if(MsgUtils.quitter(msgIn.getMessage())){
@@ -101,7 +103,7 @@ public class ThreadClient implements Runnable {
 							type = EMsgType.ERREUR;
 						}
 					}else{
-						log.print(nomClasse, ELog.ERROR, "Le temps '"+msgIn.getStrTemps()+"' n'a pas été trouvé");
+						log.print(nomClasse, ELog.ERROR, "Le verbe '"+msgIn.getMessage()+"' n'est pas reconnu!");
 						//le verbe donné ne correspond à rien
 						msg =  "Le verbe '"+msgIn.getMessage()+"' n'est pas reconnu!\n"+msg;
 						type=EMsgType.ERREUR;
@@ -148,7 +150,9 @@ public class ThreadClient implements Runnable {
 	}
 	
 	public ATempsParser createTempsParser(){
-		ATempsParser parser = new TempsParserParticipePasse(null);
+		ATempsParser parser = new TempsParserConditionnelPasse(null);
+		parser = new TempsParserConditionnelPresent(parser);
+		parser = new TempsParserParticipePasse(parser);
 		parser = new TempsParserParticipePresent(parser);
 		parser = new TempsParserPasseCompose(parser);
 		parser = new TempsParserFutur(parser);

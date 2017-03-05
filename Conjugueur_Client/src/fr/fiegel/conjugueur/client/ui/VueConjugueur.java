@@ -20,14 +20,18 @@ import javax.swing.border.MatteBorder;
 
 import fr.fiegel.conjugueur.commun.Constantes;
 import fr.fiegel.conjugueur.commun.enums.ETemps;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class VueConjugueur extends JFrame {
 	
 	private static final long serialVersionUID = 7182368510840407411L;
 	private static String nomFenetre = "Conjugueur";
 	private VueControleur ctrl;
+	private DisablablePanel pnlConnexion;
 	private JTextField txtAdrServeur;
 	private JTextField txtPortServeur;
+	private DisablablePanel panelVerbe;
 	private JTextField txtInfinitif;
 	private JComboBox<Object> cboTemps;
 	private ColorPane colorPane;
@@ -38,7 +42,7 @@ public class VueConjugueur extends JFrame {
 	public VueConjugueur(VueControleur ctrl) throws HeadlessException {
 		super(nomFenetre);
 		setPreferredSize(new Dimension(600, 300));
-		setMinimumSize(new Dimension(500, 300));
+		setMinimumSize(new Dimension(580, 200));
 		this.ctrl=ctrl;
 		addWindowListener(ctrl);
 		creationComposants();
@@ -57,16 +61,16 @@ public class VueConjugueur extends JFrame {
 			txtAdrServeur.setText("localhost");
 		}
 		if(txtPortServeur.getText().equals("") || txtPortServeur.getText() ==null){
-			msg+="Le port utilisé sera le port "+Constantes.PORT_SERVEUR+"\n";
+			msg+="Le port utilisé sera le port "+Constantes.PORT_SERVEUR;
 			txtPortServeur.setText(String.valueOf(Constantes.PORT_SERVEUR));
 		}else{
 			try{
 				int port = Integer.parseInt(txtPortServeur.getText());
 				if(port<0 || port > 65535){
-					msg+="Le port doit être compris entre 0 et 65535 inclus\n";
+					msg+="Le port doit être compris entre 0 et 65535 inclus";
 				}
 			}catch(Exception ex){
-				msg+="Le port doit être un nombre entier (par exemple: "+Constantes.PORT_SERVEUR+")\n";
+				msg+="Le port doit être un nombre entier (par exemple: "+Constantes.PORT_SERVEUR+")";
 				verifOk=false;
 			}			
 		}
@@ -86,7 +90,7 @@ public class VueConjugueur extends JFrame {
 			msg+= "Un verbe à l'infinitif doit être renseigné\n";
 			verifOk=false;
 		}
-		if(txtPortServeur.getText().equals("") || txtPortServeur.getText() ==null){
+		if(cboTemps.getSelectedIndex()==-1){
 			msg+="Le temps utilisé sera le "+ETemps.PRESENT.getIntitule()+"\n";
 			cboTemps.setSelectedItem(ETemps.PRESENT.getIntitule());
 		}
@@ -110,7 +114,7 @@ public class VueConjugueur extends JFrame {
 		try{
 			port = Integer.parseInt(txtPortServeur.getText());
 		}catch(Exception ex){
-			
+			ecrireErreur("Le port spécifié est incorrect, le port " + port +" sera utilisé");
 		}	
 		return port;
 	}
@@ -124,19 +128,20 @@ public class VueConjugueur extends JFrame {
 	}
 	
 	public ETemps getTemps(){
+		if(cboTemps.getSelectedIndex()==-1) return ETemps.PRESENT;
 		return ETemps.getTempsParNom(cboTemps.getSelectedItem().toString());
 	}
 	
 	public void ecrireSucces(String msg){
-		colorPane.append(Color.GREEN, msg);
+		colorPane.append(Color.GREEN, msg+"\n");
 	}
 	
 	public void ecrireTexte(String msg){
-		colorPane.append(Color.BLACK, msg);
+		colorPane.append(Color.BLACK, msg+"\n");
 	}
 	
 	public void ecrireErreur(String msg){
-		colorPane.append(Color.RED, msg);
+		colorPane.append(Color.RED, msg+"\n");
 	}
 	
 	
@@ -153,88 +158,135 @@ public class VueConjugueur extends JFrame {
 	}
 	
 	public void enablePartieServeur(boolean enable){
-		txtAdrServeur.setEnabled(enable);
-		txtPortServeur.setEnabled(enable);
-		btnConnexion.setEnabled(enable);
+//		txtAdrServeur.setEnabled(enable);
+//		txtPortServeur.setEnabled(enable);
+//		btnConnexion.setEnabled(enable);
+		pnlConnexion.setEnabled(enable);
 	}
 	
 	public void enablePartieConjuguaison(boolean enable){
-		txtInfinitif.setEnabled(enable);
-		cboTemps.setEnabled(enable);
-		btnValider.setEnabled(enable);
+//		txtInfinitif.setEnabled(enable);
+//		cboTemps.setEnabled(enable);
+//		btnValider.setEnabled(enable);
+		panelVerbe.setEnabled(enable);
 	}
+	
+	public void focusTxtAdrServeur(){
+		txtAdrServeur.requestFocusInWindow();
+	}
+	
+	public void focusTxtPortServeur(){
+		txtPortServeur.requestFocusInWindow();
+	}
+	
+	public void focusTxtInfintif(){
+		txtInfinitif.requestFocusInWindow();
+	}
+	
+	public void focusCboTemps(){
+		cboTemps.requestFocusInWindow();
+	}
+	
+	public void cliqueBtnConnexion(){
+		btnConnexion.doClick();
+	}
+	
+	public void cliqueBtnValider(){
+		btnValider.doClick();
+	}
+	
 	
 	private void creationComposants(){
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel pnlHaut = new JPanel();
-		pnlHaut.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		getContentPane().add(pnlHaut, BorderLayout.NORTH);
-		pnlHaut.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
+		pnlConnexion = new DisablablePanel();
+		pnlConnexion.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		getContentPane().add(pnlConnexion, BorderLayout.NORTH);
+		pnlConnexion.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
 		
 		JLabel lblAdrServeur = new JLabel("Adresse serveur");
 		lblAdrServeur.setPreferredSize(new Dimension(80, 14));
-		pnlHaut.add(lblAdrServeur);
+		pnlConnexion.add(lblAdrServeur);
 		
 		txtAdrServeur = new JTextField();
+		lblAdrServeur.setLabelFor(txtAdrServeur);
 		txtAdrServeur.setMinimumSize(new Dimension(80, 20));
 		txtAdrServeur.setPreferredSize(new Dimension(80, 20));
-		pnlHaut.add(txtAdrServeur);
 		txtAdrServeur.setColumns(10);
+		txtAdrServeur.setName("txtAdrServeur");
+		txtAdrServeur.addKeyListener(ctrl);
+		pnlConnexion.add(txtAdrServeur);
 		
 		JLabel lblPortServeur = new JLabel("Port serveur");
-		pnlHaut.add(lblPortServeur);
+		pnlConnexion.add(lblPortServeur);
 		
 		txtPortServeur = new JTextField();
+		lblPortServeur.setLabelFor(txtPortServeur);
 		txtPortServeur.setPreferredSize(new Dimension(80, 20));
 		txtPortServeur.setMinimumSize(new Dimension(80, 20));
-		pnlHaut.add(txtPortServeur);
 		txtPortServeur.setColumns(10);
+		txtPortServeur.setName("txtPortServeur");
+		txtPortServeur.addKeyListener(ctrl);
+		pnlConnexion.add(txtPortServeur);
 		
 		btnConnexion = new JButton("Connexion");
+		btnConnexion.setName("btnConnexion");
+		btnConnexion.setPreferredSize(new Dimension(100, 26));
 		btnConnexion.addActionListener(ctrl);
 		btnConnexion.setActionCommand("connexion");
-		pnlHaut.add(btnConnexion);
+		btnConnexion.addKeyListener(ctrl);
+		pnlConnexion.add(btnConnexion);
 		
 		pnlEtatServeur = new JPanel();
 		pnlEtatServeur.setPreferredSize(new Dimension(40, 20));
 		pnlEtatServeur.setMinimumSize(new Dimension(20, 20));
-		pnlHaut.add(pnlEtatServeur);
+		pnlConnexion.add(pnlEtatServeur);
+		pnlConnexion.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtAdrServeur, txtPortServeur, btnConnexion}));
 		
 		JPanel pnlCentre = new JPanel();
 		getContentPane().add(pnlCentre, BorderLayout.CENTER);
 		pnlCentre.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEADING);
-		pnlCentre.add(panel, BorderLayout.NORTH);
+		panelVerbe = new DisablablePanel();
+		FlowLayout fl_panelVerbe = (FlowLayout) panelVerbe.getLayout();
+		fl_panelVerbe.setAlignment(FlowLayout.LEADING);
+		pnlCentre.add(panelVerbe, BorderLayout.NORTH);
 		
 		JLabel lblVerbeLinfinitif = new JLabel("Verbe à l'infinitif");
 		lblVerbeLinfinitif.setPreferredSize(new Dimension(80, 14));
-		panel.add(lblVerbeLinfinitif);
+		panelVerbe.add(lblVerbeLinfinitif);
 		
 		txtInfinitif = new JTextField();
+		lblVerbeLinfinitif.setLabelFor(txtInfinitif);
 		txtInfinitif.setPreferredSize(new Dimension(80, 20));
 		txtInfinitif.setMinimumSize(new Dimension(80, 20));
-		panel.add(txtInfinitif);
 		txtInfinitif.setColumns(10);
+		txtInfinitif.setName("txtInfinitif");
+		txtInfinitif.addKeyListener(ctrl);
+		panelVerbe.add(txtInfinitif);
 		
 		JLabel lblTemps = new JLabel("Temps");
 		lblTemps.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblTemps.setPreferredSize(new Dimension(60, 14));
-		panel.add(lblTemps);
+		lblTemps.setPreferredSize(new Dimension(71, 14));
+		panelVerbe.add(lblTemps);
 		
 		cboTemps = new JComboBox<Object>();
+		lblTemps.setLabelFor(cboTemps);
 		cboTemps.setModel(new DefaultComboBoxModel<Object>(ETemps.getArrayTemps()));
 		cboTemps.setMinimumSize(new Dimension(80, 20));
-		cboTemps.setPreferredSize(new Dimension(80, 20));
-		panel.add(cboTemps);
+		cboTemps.setPreferredSize(new Dimension(150, 20));
+		cboTemps.setName("cboTemps");
+		cboTemps.addKeyListener(ctrl);
+		panelVerbe.add(cboTemps);
 		
 		btnValider = new JButton("Valider");
+		btnValider.setName("btnValider");
+		btnValider.setPreferredSize(new Dimension(80, 26));
 		btnValider.addActionListener(ctrl);
 		btnValider.setActionCommand("valider");
-		panel.add(btnValider);
+		btnValider.addKeyListener(ctrl);
+		panelVerbe.add(btnValider);
+		panelVerbe.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtInfinitif, cboTemps, btnValider}));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		pnlCentre.add(scrollPane, BorderLayout.CENTER);
