@@ -77,7 +77,7 @@ public class ThreadClient implements Runnable {
 				msgOut=null;
 				log.print(nomClasse, ELog.DEBUG	, "Attente d'un message");
 				msgIn = (MessageClient)in.readObject();
-				log.print(nomClasse, ELog.DEBUG, msgIn.toString());
+				log.print(nomClasse, ELog.INFO, msgIn.toString());
 				
 				//vérification si ce n'est pas un message pour fermer la connexion
 				if(MsgUtils.quitter(msgIn.getMessage())){

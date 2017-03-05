@@ -16,7 +16,7 @@ public class ConjugueurServeur {
 		ServerSocket serveur = null;
 		Logger.create("Serveur");
 		Logger log = Logger.get();
-		log.setPrintDebug(true);
+		//log.setPrintDebug(true);
 		try {
 			int port = Constantes.PORT_SERVEUR;
 			if (args.length >= 1) {
