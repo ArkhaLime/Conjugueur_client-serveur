@@ -85,7 +85,7 @@ public class Logger {
 	}
 	
 	private static  String getCurrentTime(){
-		SimpleDateFormat format = new SimpleDateFormat("[H:m:s.S]");
+		SimpleDateFormat format = new SimpleDateFormat("[HH:mm:ss.SSS]");
 		Date date = new Date();
 		return format.format(date);
 	}
