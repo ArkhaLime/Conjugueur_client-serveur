@@ -120,7 +120,7 @@ public class VueConjugueur extends JFrame {
 	}
 	
 	public String getVerbeInfinitif(){
-		return txtInfinitif.getText();
+		return txtInfinitif.getText().toLowerCase();
 	}
 	
 	public void effacerInfinitif(){
