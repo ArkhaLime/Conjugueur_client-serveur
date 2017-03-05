@@ -1,0 +1,1 @@
+java -jar Conjugueur_Serveur.jar
