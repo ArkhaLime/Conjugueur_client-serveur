@@ -200,7 +200,7 @@ public class VueConjugueur extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		pnlConnexion = new DisablablePanel();
-		pnlConnexion.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		pnlConnexion.setBorder(new MatteBorder(0, 0, 1, 0, new Color(0, 0, 0)));
 		getContentPane().add(pnlConnexion, BorderLayout.NORTH);
 		pnlConnexion.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
 		
