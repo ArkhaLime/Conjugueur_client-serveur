@@ -37,7 +37,7 @@ import fr.fiegel.conjugueur.parser.verbe.VerbeParserTroisiemeGrSoudre;
 import fr.fiegel.conjugueur.temps.ATemps;
 import fr.fiegel.conjugueur.verbe.AVerbe;
 
-public class ThreadClient implements Runnable {
+public class ThreadClient extends Thread {
 
 	private Socket socCom;
 	private boolean quitte = false;

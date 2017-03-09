@@ -32,12 +32,12 @@ public class ConjugueurServeur {
 			while (true) {
 				try {
 					Socket socCom = serveur.accept();
-					Thread fils = new Thread(new ThreadClient(socCom));
+//					Thread fils = new Thread(new ThreadClient(socCom));
+					Thread fils = new ThreadClient(socCom);
 					fils.start();
 				} catch (IOException e) {
 					log.print(ELog.ERROR, "Erreur avec un fils\n\t"+e.getLocalizedMessage());
 				}
-	
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
